@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Customer Churn Predictor</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background: #f9f9f9;
+    }
+
+    .hero {
+      background: linear-gradient(120deg, #00c6ff, #0072ff);
+      color: white;
+      padding: 100px 0;
+      text-align: center;
+    }
+
+    .hero h1 {
+      font-size: 3rem;
+    }
+
+    .hero p {
+      font-size: 1.25rem;
+    }
+
+    .content-section {
+      padding: 60px 20px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+      <a class="navbar-brand" href="#">ChurnPredict</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link active" href="#">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#loginModal">Login</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#signupModal">Sign Up</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="container">
+      <h1>Welcome to Customer Churn Predictor</h1>
+      <p>Empowering businesses to retain valuable customers using data-driven insights</p>
+    </div>
+  </section>
+
+  <!-- Content Section -->
+  <section class="content-section text-center">
+    <div class="container">
+      <h2>Why Predict Customer Churn?</h2>
+      <p class="lead mt-3">
+        Customer churn prediction helps businesses identify which customers are likely to leave, allowing proactive
+        measures to retain them.
+        By analyzing customer behavior, service usage, and payment history, companies can increase customer satisfaction
+        and boost revenue.
+        Our tool leverages machine learning models to give accurate predictions that support strategic decision-making.
+      </p>
+    </div>
+  </section>
+
+  <!-- Login Modal -->
+<div class="modal fade" id="loginModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <form id="loginForm">
+        <div class="modal-header">
+          <h5 class="modal-title">Login</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <input type="email" class="form-control mb-3" id="email" name="email" placeholder="Email" required>
+          <input type="password" class="form-control mb-3" id="password" name="password" placeholder="Password" required>
+          <div id="loginMessage" class="text-danger"></div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary">Log In</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Sign Up Modal -->
+<div class="modal fade" id="signupModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <form id="signupForm">
+        <div class="modal-header">
+          <h5 class="modal-title">Sign Up</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <input type="text" class="form-control mb-3" name="name" placeholder="Full Name" required>
+          <input type="email" class="form-control mb-3" id="signupEmail" name="email" placeholder="Email" required>
+          <input type="password" class="form-control mb-3" id="signupPassword" name="password" placeholder="Password" required>
+          <div id="signupMessage" class="text-danger"></div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-success">Sign Up</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+
+  <!-- Scripts -->
+  <script>
+    // Login AJAX
+document.getElementById("loginForm").addEventListener("submit", function(e) {
+  e.preventDefault();
+  
+  const email = document.getElementById("email").value;
+  const password = document.getElementById("password").value;
+
+  fetch("/login", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ email, password })
+  })
+  .then(response => response.json())
+  .then(data => {
+    if (data.success) {
+      window.location.href = data.redirect; // Redirect to Index.html
+    } else {
+      alert(data.message);
+    }
+  });
+});
+
+// Signup AJAX
+document.getElementById("signupForm").addEventListener("submit", function (e) {
+  e.preventDefault();
+  
+  const email = document.getElementById("signupEmail").value;
+  const password = document.getElementById("signupPassword").value;
+  const name = document.getElementById("signupName").value;
+
+  fetch("/signup", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ email, password, name })
+  })
+  .then(res => res.json())
+  .then(data => {
+    if (data.success) {
+      alert("Signup successful!");
+      location.reload();
+    } else {
+      document.getElementById("signupMessage").textContent = data.message || "Signup failed.";
+    }
+  })
+  .catch(() => {
+    document.getElementById("signupMessage").textContent = "Server error.";
+  });
+});
+
+  </script>
+
+  <!-- Bootstrap Bundle JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Customer Churn Prediction</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    .hero {
+      background: linear-gradient(120deg, #00c6ff, #0072ff);
+      color: white;
+      padding: 100px 0;
+      text-align: center;
+    }
+
+    .hero h1 {
+      font-size: 3rem;
+    }
+
+    .hero p {
+      font-size: 1.25rem;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #f0f4f8, #d9e2ec);
+      padding: 20px;
+    }
+
+    .form-container {
+      background-color: #ffffff;
+      max-width: 700px;
+      margin: auto;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      text-align: center;
+      background: linear-gradient(to right, #4facfe, #00f2fe);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      font-size: 28px;
+      margin-bottom: 25px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+      <a class="navbar-brand" href="#">ChurnPredict</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link active" href="/">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/" >Logout</a>
+          </li>
+          
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Form Section -->
+  <div class="form-container">
+    <h1>Customer Churn Prediction</h1>
+    <form method="POST" action="/predict">
+
+      <div class="row g-3">
+        <!-- Each input field -->
+        <div class="col-md-6">
+          <label for="gender" class="form-label">Gender</label>
+          <select name="gender" id="gender" class="form-select">
+            <option value="0" selected>Female</option>
+            <option value="1">Male</option>
+          </select>
+        </div>
+
+        <div class="col-md-6">
+          <label for="SeniorCitizen" class="form-label">Senior Citizen</label>
+          <select name="SeniorCitizen" id="SeniorCitizen" class="form-select">
+            <option value="0" selected>No</option>
+            <option value="1">Yes</option>
+          </select>
+        </div>
+
+        <div class="col-md-6">
+          <label for="Partner" class="form-label">Partner</label>
+          <select name="Partner" id="Partner" class="form-select">
+            <option value="0" selected>No</option>
+            <option value="1">Yes</option>
+          </select>
+        </div>
+
+        <div class="col-md-6">
+          <label for="Dependents" class="form-label">Dependents</label>
+          <select name="Dependents" id="Dependents" class="form-select">
+            <option value="0" selected>No</option>
+            <option value="1">Yes</option>
+          </select>
+        </div>
+
+        <div class="col-md-6">
+          <label for="tenure" class="form-label">Tenure (months)</label>
+          <input type="number" name="tenure" id="tenure" class="form-control" value="46" required>
+        </div>
+
+        <div class="col-md-6">
+          <label for="PhoneService" class="form-label">Phone Service</label>
+          <select name="PhoneService" id="PhoneService" class="form-select">
+            <option value="0">No</option>
+            <option value="1" selected>Yes</option>
+          </select>
+        </div>
+
+        <div class="col-md-6">
+          <label for="MultipleLines" class="form-label">Multiple Lines</label>
+          <select name="MultipleLines" id="MultipleLines" class="form-select">
+            <option value="0" selected>No</option>
+            <option value="1">Yes</option>
+            <option value="2">No phone service</option>
+          </select>
+        </div>
+
+        <div class="col-md-6">
+          <label for="InternetService" class="form-label">Internet Service</label>
+          <select name="InternetService" id="InternetService" class="form-select">
+            <option value="0" selected>No</option>
+            <option value="1">DSL</option>
+            <option value="2">Fiber optic</option>
+          </select>
+        </div>
+
+        <div class="col-md-6">
+          <label for="OnlineSecurity" class="form-label">Online Security</label>
+          <select name="OnlineSecurity" id="OnlineSecurity" class="form-select">
+            <option value="0" selected>No</option>
+            <option value="1">Yes</option>
+            <option value="2">No internet service</option>
+          </select>
+        </div>
+
+        <div class="col-md-6">
+          <label for="OnlineBackup" class="form-label">Online Backup</label>
+          <select name="OnlineBackup" id="OnlineBackup" class="form-select">
+            <option value="0" selected>No</option>
+            <option value="1">Yes</option>
+            <option value="2">No internet service</option>
+          </select>
+        </div>
+
+        <div class="col-md-6">
+          <label for="DeviceProtection" class="form-label">Device Protection</label>
+          <select name="DeviceProtection" id="DeviceProtection" class="form-select">
+            <option value="0">No</option>
+            <option value="1">Yes</option>
+            <option value="2" selected>No internet service</option>
+          </select>
+        </div>
+
+        <div class="col-md-6">
+          <label for="TechSupport" class="form-label">Tech Support</label>
+          <select name="TechSupport" id="TechSupport" class="form-select">
+            <option value="0">No</option>
+            <option value="1">Yes</option>
+            <option value="2" selected>No internet service</option>
+          </select>
+        </div>
+
+        <div class="col-md-6">
+          <label for="StreamingTV" class="form-label">Streaming TV</label>
+          <select name="StreamingTV" id="StreamingTV" class="form-select">
+            <option value="0" selected>No</option>
+            <option value="1">Yes</option>
+            <option value="2">No internet service</option>
+          </select>
+        </div>
+
+        <div class="col-md-6">
+          <label for="StreamingMovies" class="form-label">Streaming Movies</label>
+          <select name="StreamingMovies" id="StreamingMovies" class="form-select">
+            <option value="0" selected>No</option>
+            <option value="1">Yes</option>
+            <option value="2">No internet service</option>
+          </select>
+        </div>
+
+        <div class="col-md-6">
+          <label for="Contract" class="form-label">Contract</label>
+          <select name="Contract" id="Contract" class="form-select">
+            <option value="0">Month-to-month</option>
+            <option value="1">One year</option>
+            <option value="2" selected>Two year</option>
+          </select>
+        </div>
+
+        <div class="col-md-6">
+          <label for="PaperlessBilling" class="form-label">Paperless Billing</label>
+          <select name="PaperlessBilling" id="PaperlessBilling" class="form-select">
+            <option value="0" selected>No</option>
+            <option value="1">Yes</option>
+          </select>
+        </div>
+
+        <div class="col-md-6">
+          <label for="PaymentMethod" class="form-label">Payment Method</label>
+          <select name="PaymentMethod" id="PaymentMethod" class="form-select">
+            <option value="0">Electronic check</option>
+            <option value="1" selected>Mailed check</option>
+            <option value="2">Bank transfer (automatic)</option>
+            <option value="3">Credit card (automatic)</option>
+          </select>
+        </div>
+
+        <div class="col-md-6">
+          <label for="MonthlyCharges" class="form-label">Monthly Charges</label>
+          <input type="number" step="0.01" name="MonthlyCharges" id="MonthlyCharges" class="form-control" required>
+        </div>
+
+        <div class="col-md-6">
+          <label for="TotalCharges" class="form-label">Total Charges</label>
+          <input type="number" step="0.01" name="TotalCharges" id="TotalCharges" class="form-control" required>
+        </div>
+      </div>
+
+      <div class="mt-4">
+        <input type="submit" value="Predict" class="btn btn-primary w-100">
+      </div>
+    </form>
+    <div>
+      <h1>Prediction Result</h1>
+      {% if prediction_text %}
+        <div class="alert alert-info mt-4" role="alert">
+          {{ prediction_text }}
+        </div>
+      {% endif %}
+
+    </div>
+    
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
